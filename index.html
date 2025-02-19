@@ -1,0 +1,226 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="es">\
+\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>Comprar Sonico Token</title>\
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>\
+    <style>\
+        /* Dise\'f1o b\'e1sico para la p\'e1gina */\
+        body \{\
+            font-family: 'Arial', sans-serif;\
+            margin: 0;\
+            padding: 0;\
+            background-color: #f4f4f9;\
+            color: #333;\
+            text-align: center;\
+        \}\
+\
+        header \{\
+            background-color: #4CAF50;\
+            color: white;\
+            padding: 20px;\
+        \}\
+\
+        h1 \{\
+            margin: 0;\
+            font-size: 36px;\
+        \}\
+\
+        .content \{\
+            max-width: 800px;\
+            margin: 50px auto;\
+            background-color: white;\
+            padding: 20px;\
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);\
+            border-radius: 8px;\
+        \}\
+\
+        .button-container \{\
+            margin: 20px 0;\
+        \}\
+\
+        button \{\
+            padding: 15px 30px;\
+            font-size: 18px;\
+            background-color: #007bff;\
+            color: white;\
+            border: none;\
+            border-radius: 5px;\
+            cursor: pointer;\
+            transition: background-color 0.3s ease;\
+        \}\
+\
+        button:disabled \{\
+            background-color: #cccccc;\
+        \}\
+\
+        button:hover \{\
+            background-color: #0056b3;\
+        \}\
+\
+        .status \{\
+            margin-top: 20px;\
+            font-size: 18px;\
+        \}\
+\
+        .success \{\
+            color: green;\
+        \}\
+\
+        .error \{\
+            color: red;\
+        \}\
+\
+        .footer \{\
+            margin-top: 50px;\
+            background-color: #333;\
+            color: white;\
+            padding: 10px;\
+            font-size: 14px;\
+        \}\
+    </style>\
+</head>\
+\
+<body>\
+    <header>\
+        <h1>Comprar Sonico Token</h1>\
+    </header>\
+\
+    <div class="content">\
+        <p>Con\'e9ctate a tu wallet MetaMask para comprar Sonico Token usando BNB o USDT.</p>\
+\
+        <button id="connectWallet">Conectar MetaMask</button>\
+\
+        <div class="button-container">\
+            <button id="buyWithBNB" disabled>Comprar con BNB</button>\
+            <button id="buyWithUSDT" disabled>Comprar con USDT</button>\
+        </div>\
+\
+        <p id="status" class="status"></p>\
+    </div>\
+\
+    <footer class="footer">\
+        <p>Sonico Token - 2025 | <a href="https://github.com/tuusuario/sonico-token-web" target="_blank" style="color: white;">Ver en GitHub</a></p>\
+    </footer>\
+\
+    <script>\
+        // Direcci\'f3n de contrato del token Sonico y router de PancakeSwap\
+        const tokenAddress = "0xTuToken"; // Reemplaza con la direcci\'f3n de tu token\
+        const pancakeRouter = "0x10ED43C718714eb63d5aA57B78B54704E256024E"; // Router PancakeSwap\
+        const usdtAddress = "0x55d398326f99059fF775485246999027B3197955"; // USDT en BSC\
+\
+        let userAddress;\
+\
+        // Funci\'f3n para conectar MetaMask\
+        async function connectWallet() \{\
+            if (window.ethereum) \{\
+                const web3 = new Web3(window.ethereum);\
+                try \{\
+                    await window.ethereum.request(\{ method: "eth_requestAccounts" \});\
+                    const accounts = await web3.eth.getAccounts();\
+                    userAddress = accounts[0];\
+                    document.getElementById("status").innerText = `Conectado: $\{userAddress\}`;\
+                    document.getElementById("buyWithBNB").disabled = false;\
+                    document.getElementById("buyWithUSDT").disabled = false;\
+                \} catch (error) \{\
+                    console.error("Error al conectar la wallet", error);\
+                    document.getElementById("status").innerText = "Error al conectar la wallet.";\
+                    document.getElementById("status").classList.add("error");\
+                \}\
+            \} else \{\
+                alert("Por favor, instala MetaMask.");\
+                document.getElementById("status").innerText = "MetaMask no est\'e1 instalado.";\
+                document.getElementById("status").classList.add("error");\
+            \}\
+        \}\
+\
+        // Funci\'f3n para comprar el token\
+        async function buyToken(paymentToken) \{\
+            if (!userAddress) return alert("Conecta tu wallet primero.");\
+            const web3 = new Web3(window.ethereum);\
+            const routerContract = new web3.eth.Contract([\
+                \{\
+                    "constant": false,\
+                    "inputs": [\
+                        \{ "name": "amountIn", "type": "uint256" \},\
+                        \{ "name": "amountOutMin", "type": "uint256" \},\
+                        \{ "name": "path", "type": "address[]" \},\
+                        \{ "name": "to", "type": "address" \},\
+                        \{ "name": "deadline", "type": "uint256" \}\
+                    ],\
+                    "name": "swapExactTokensForTokensSupportingFeeOnTransferTokens",\
+                    "outputs": [],\
+                    "payable": false,\
+                    "stateMutability": "nonpayable",\
+                    "type": "function"\
+                \},\
+                \{\
+                    "constant": false,\
+                    "inputs": [\
+                        \{ "name": "amountOutMin", "type": "uint256" \},\
+                        \{ "name": "path", "type": "address[]" \},\
+                        \{ "name": "to", "type": "address" \},\
+                        \{ "name": "deadline", "type": "uint256" \}\
+                    ],\
+                    "name": "swapExactETHForTokensSupportingFeeOnTransferTokens",\
+                    "outputs": [],\
+                    "payable": true,\
+                    "stateMutability": "payable",\
+                    "type": "function"\
+                \}\
+            ], pancakeRouter);\
+\
+            const amountToBuy = web3.utils.toWei("10", "ether"); // Cantidad ajustable\
+            let path;\
+\
+            try \{\
+                if (paymentToken === "BNB") \{\
+                    path = ["0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", tokenAddress];\
+                    await routerContract.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(\
+                        0,\
+                        path,\
+                        userAddress,\
+                        Math.floor(Date.now() / 1000) + 60 * 10\
+                    ).send(\{ from: userAddress, value: web3.utils.toWei("0.01", "ether") \});\
+\
+                    document.getElementById("status").innerText = "Compra realizada con \'e9xito usando BNB!";\
+                    document.getElementById("status").classList.remove("error");\
+                    document.getElementById("status").classList.add("success");\
+                \} else if (paymentToken === "USDT") \{\
+                    path = [usdtAddress, tokenAddress];\
+                    await routerContract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(\
+                        amountToBuy,\
+                        0,\
+                        path,\
+                        userAddress,\
+                        Math.floor(Date.now() / 1000) + 60 * 10\
+                    ).send(\{ from: userAddress \});\
+\
+                    document.getElementById("status").innerText = "Compra realizada con \'e9xito usando USDT!";\
+                    document.getElementById("status").classList.remove("error");\
+                    document.getElementById("status").classList.add("success");\
+                \}\
+            \} catch (error) \{\
+                console.error("Error al realizar la compra", error);\
+                document.getElementById("status").innerText = "Error al realizar la compra.";\
+                document.getElementById("status").classList.add("error");\
+            \}\
+        \}\
+\
+        document.getElementById("connectWallet").addEventListener("click", connectWallet);\
+        document.getElementById("buyWithBNB").addEventListener("click", () => buyToken("BNB"));\
+        document.getElementById("buyWithUSDT").addEventListener("click", () => buyToken("USDT"));\
+    </script>\
+</body>\
+\
+</html>\
+}
