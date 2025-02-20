@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SONICO</title>
     <style>
-        /* Basic page styles */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background: url('sonico-background.png') no-repeat center center;
-            background-size: cover; 
+            background-size: cover;
             color: white;
             margin: 0;
             overflow-x: hidden;
@@ -35,6 +34,8 @@
         .section {
             padding: 50px 20px;
             border-bottom: 1px solid #333;
+            opacity: 1;
+            transform: translateY(50px);
         }
         .btn {
             background: #ff9800;
@@ -71,6 +72,19 @@
         .loading {
             color: yellow;
         }
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                margin: 80px auto;
+            }
+            .btn {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+            .hero {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -78,16 +92,15 @@
         <h1>SONICO</h1>
     </header>
     
-    <div class="hero">Join the Sonico Revolution!</div>
+    <div class="hero">Join the SONICO Revolution!</div>
     
     <div class="logo"></div>
     
     <div class="container">
         <section class="section">
-            <h2>Buy Sonico</h2>
-            <p>Connect your MetaMask and easily acquire Sonico from PancakeSwap.</p>
+            <h2>Buy SONICO</h2>
             <button class="btn" id="connectWallet">Connect MetaMask</button>
-            <button class="btn" id="buySonico">Buy Sonico on PancakeSwap</button>
+            <button class="btn" id="connectPancakeSwap">Buy on PancakeSwap</button>
             <p id="status"></p>
             <p id="error" class="error"></p>
             <p id="loading" class="loading" style="display: none;">Loading...</p>
@@ -95,11 +108,11 @@
         
         <section class="section roadmap">
             <h2>Roadmap</h2>
-            <p>This is our path toward the future of Sonico. Each phase is designed to ensure sustainable growth and mass adoption.</p>
+            <p>Our journey towards the future of SONICO is designed to ensure sustained growth and mass adoption.</p>
             <ul>
-                <li>✅ Launch: Our token has been officially launched on exchange platforms.</li>
-                <li>🚀 Exchange Integration: We are working to integrate Sonico into several exchanges for better accessibility.</li>
-                <li>🔥 Marketing & Expansion: We will focus on expanding the ecosystem and marketing campaigns to reach new users.</li>
+                <li>✅ Launch: SONICO is officially available on exchanges.</li>
+                <li>🚀 Exchange Integration: We are working to integrate SONICO into multiple exchanges.</li>
+                <li>🔥 Marketing & Expansion: Expanding our ecosystem and launching strategic campaigns.</li>
             </ul>
         </section>
         
@@ -107,14 +120,14 @@
             <h2>Tokenomics</h2>
             <p><strong>Total Supply:</strong> 150,000,000,000 SONICO</p>
             <p><strong>Distribution:</strong> 50% Presale, 30% Liquidity, 20% Development</p>
-            <p>Sonico is distributed strategically to ensure its sustainability and continuous growth. The presale is the first key stage, followed by liquidity to ensure market stability.</p>
+            <p>SONICO is strategically distributed to ensure sustainability and long-term growth.</p>
         </section>
         
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <script>
-        const tokenAddress = "0xYourTokenAddress"; // Replace with the actual Sonico token address
+        const tokenAddress = "0xTuToken";
         let userAddress;
         
         async function connectWallet() {
@@ -131,7 +144,7 @@
                     document.getElementById("loading").style.display = "none";
                     document.getElementById("error").innerText = "";
                 } catch (error) {
-                    document.getElementById("error").innerText = "Error connecting wallet. Please try again.";
+                    document.getElementById("error").innerText = "Error connecting wallet. Try again.";
                     document.getElementById("loading").style.display = "none";
                 }
             } else {
@@ -140,13 +153,13 @@
             }
         }
 
-        function buySonico() {
+        function connectToPancakeSwap() {
             const url = "https://pancakeswap.finance/swap?outputCurrency=" + tokenAddress;
             window.open(url, "_blank");
         }
 
         document.getElementById("connectWallet").addEventListener("click", connectWallet);
-        document.getElementById("buySonico").addEventListener("click", buySonico);
+        document.getElementById("connectPancakeSwap").addEventListener("click", connectToPancakeSwap);
     </script>
 </body>
 </html>
