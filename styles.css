@@ -1,0 +1,125 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: url('images/sonico-background.png') no-repeat center center;
+    background-size: cover;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+header {
+    padding: 12px;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
+
+.section {
+    padding: 24px 12px;
+    border-bottom: 1px solid #333;
+}
+
+.btn {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin: 8px;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #e68900;
+    transform: scale(1.05);
+}
+
+.hero {
+    background: url('sonico-banner.jpg') no-repeat center center/cover;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    margin: 10px auto;
+    background: url('images/sonico-logo.png') no-repeat center center/contain;
+}
+
+.error {
+    color: red;
+}
+
+.loading {
+    color: yellow;
+}
+
+/* Estilos para el campo de cantidad y selección de moneda */
+.amount-container {
+    margin-top: 12px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+input[type="number"], select {
+    padding: 6px;
+    font-size: 14px;
+    margin: 6px;
+    width: 120px;
+    border-radius: 5px;
+    border: none;
+}
+
+.calc-result {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* Estilo para el temporizador */
+.countdown-timer {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff9800;
+    margin-top: 14px;
+}
+
+/* --- RESPONSIVE DESIGN PARA MÓVILES --- */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    .container {
+        width: 90%;
+        margin: 80px auto;
+        padding: 15px;
+    }
+    .btn {
+        width: 100%;
+        padding: 10px;
+    }
+    input[type="number"], select {
+        width: 100%;
+        font-size: 16px;
+    }
+}
