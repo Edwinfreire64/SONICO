@@ -181,6 +181,11 @@
         </section>
         
         <div class="countdown-timer" id="countdown"></div>
+
+        <!-- Enlace para abrir MetaMask en dispositivos móviles -->
+        <section class="section">
+            <a href="metamask://open_dapp?uri=https://your-dapp-url.com" class="btn" id="openMetaMaskApp">Abrir app MetaMask</a>
+        </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
@@ -224,16 +229,8 @@
                         document.getElementById("loading").style.display = "none";
                         document.getElementById("error").innerText = "";
                     } else {
-                        // Intentamos abrir MetaMask usando el esquema "metamask://"
-                        if (navigator.userAgent.match(/android|iphone|ipad/i)) {
-                            window.location.href = "metamask://";
-                            setTimeout(function() {
-                                alert("No se detectó MetaMask. Asegúrate de tenerlo instalado.");
-                            }, 500);
-                        } else {
-                            document.getElementById("error").innerText = "Por favor, instala MetaMask en tu dispositivo móvil.";
-                            document.getElementById("loading").style.display = "none";
-                        }
+                        document.getElementById("error").innerText = "Por favor, instala MetaMask en tu dispositivo móvil.";
+                        document.getElementById("loading").style.display = "none";
                     }
                 } catch (error) {
                     document.getElementById("error").innerText = "Error al conectar la wallet. Intenta de nuevo.";
