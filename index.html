@@ -9,7 +9,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: url('sonico-background.png') no-repeat center center;
+            background: url('images/sonico-background.png') no-repeat center center;
             background-size: cover;
             color: white;
             margin: 0;
@@ -216,18 +216,24 @@
             if (window.ethereum) {
                 const web3 = new Web3(window.ethereum);
                 try {
-                    await window.ethereum.request({ method: "eth_requestAccounts" });
-                    const accounts = await web3.eth.getAccounts();
-                    userAddress = accounts[0];
-                    document.getElementById("status").innerText = "Conectado: " + userAddress;
-                    document.getElementById("loading").style.display = "none";
-                    document.getElementById("error").innerText = "";
+                    // Verificación para dispositivos móviles
+                    if (window.ethereum.isMetaMask) {
+                        await window.ethereum.request({ method: "eth_requestAccounts" });
+                        const accounts = await web3.eth.getAccounts();
+                        userAddress = accounts[0];
+                        document.getElementById("status").innerText = "Conectado: " + userAddress;
+                        document.getElementById("loading").style.display = "none";
+                        document.getElementById("error").innerText = "";
+                    } else {
+                        document.getElementById("error").innerText = "Por favor, instala MetaMask en tu dispositivo móvil.";
+                        document.getElementById("loading").style.display = "none";
+                    }
                 } catch (error) {
                     document.getElementById("error").innerText = "Error al conectar la wallet. Intenta de nuevo.";
                     document.getElementById("loading").style.display = "none";
                 }
             } else {
-                alert("Por favor, instala MetaMask");
+                alert("Por favor, instala MetaMask en tu dispositivo.");
                 document.getElementById("loading").style.display = "none";
             }
         }
